@@ -231,6 +231,8 @@ def _pickle_dict(
     langcode: str, listpath: str = "lists", filepath: Optional[str] = None
 ) -> None:
     mydict = _load_dict(langcode, listpath)
+    # Sort dict before pickling; this saves space with lzma compression
+    mydict {k: v for k, v in sorted(mydict.items(), key=lambda item: item[1])}
     if filepath is None:
         filename = f"data/{langcode}.plzma"
         filepath = str(Path(__file__).parent / filename)
